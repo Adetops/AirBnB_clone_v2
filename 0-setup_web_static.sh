@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# A bash script that sets up my wwb servers for the deployment
+# A bash script that sets up my web servers for the deployment
 # of web_static
 
 # Ensuring that the programme always exit succesful
@@ -16,8 +16,8 @@ sudo mkdir -p /data/web_static/shared/
 
 # Creating fake HTML file for testing Nginx configuration
 content="<html>
-  <head></head>
-  <body>XimeonLeo under construction</body>
+  <head>Adetops</head>
+  <body>Configuration of Adetops</body>
 </html>"
 
 echo "$content"| sudo tee /data/web_static/releases/test/index.html
@@ -35,7 +35,7 @@ sudo chown -Rh ubuntu:ubuntu /data/
 config_file="/etc/nginx/sites-available/default"
 
 # adding a default welcome message
-echo 'Hello World' | sudo tee /var/www/html/index.html > /dev/null
+echo 'Hello World!' | sudo tee /var/www/html/index.html > /dev/null
 
 # handling redirections
 replacement="48i\\\tif (\$request_filename ~ redirect_me){\n\t\trewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n\t}"
@@ -46,10 +46,10 @@ echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
 line="\\\terror_page 404 /404.html;\n\tlocation = /404.html {\n\t\troot /usr/share/nginx/html;\n\t\tinternal;\n\t}"
 sudo sed -i "27i $line" $config_file
 
-# adsing a custom header
+# adding a custom header
 sudo sed -i "32i\\\tadd_header X-Served-By $HOSTNAME;" $config_file
 
-# creating an alias "hbnb_syatic" to a root
+# creating an alias "hbnb_static" to a root
 sudo sed -i '38i\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' $config_file
 
 # Restarting Nginx
