@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" A module that creates an .tgz archive from the content of
+""" A module that creates a .tgz archive from the content of
         web_static
 """
 from datetime import datetime
@@ -7,7 +7,7 @@ from fabric.api import local, task, run, put, env, runs_once
 import os
 
 
-env.hosts = ['54.162.80.16', '54.236.45.116']
+env.hosts = ['54.157.188.93', '34.207.155.107']
 
 
 @runs_once
@@ -32,7 +32,7 @@ def do_pack():
 
 @task
 def do_deploy(archive_path):
-    """ Destribute an archive to my web servers
+    """ Distribute an archive to my web servers
     """
     try:
         if not os.path.exists(archive_path):
@@ -45,13 +45,13 @@ def do_deploy(archive_path):
 
         location = "/data/web_static/releases/"
 
-        # removing decompressed directort if exitsts
+        # removing decompressed directory if exists
         run("rm -rf {}{}/".format(location, _file))
 
         # making necessary directory
         run("mkdir -p {}{}/".format(location, _file))
 
-        # Uncompresaing archive file
+        # Uncompressing archive file
         run("tar -xzf /tmp/{} -C {}{}".format(zip_file, location, _file))
 
         # removing archive from the server('/tmp/')
@@ -63,7 +63,7 @@ def do_deploy(archive_path):
         # removing /data/web_static/releases/web_static
         run("rm -rf {}{}/web_static".format(location, _file))
 
-        # recreating smylink
+        # recreating symlink
         run("rm -rf /data/web_static/current")
         run("ln -s {}{}/ /data/web_static/current".format(location, _file))
         print('New version deployed!')

@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" A module that creates an .tgz archive from the content of
+""" A module that creates a .tgz archive from the content of
         web_static
 """
 from datetime import datetime
