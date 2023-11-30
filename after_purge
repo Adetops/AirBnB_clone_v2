@@ -9,7 +9,7 @@
 #                                                          #
 ############################################################
 
-# using my web servera in sudo mode (as root)
+# using my web server in sudo mode (as root)
 sudo su
 
 # installing the nginx server newly with some configurations
